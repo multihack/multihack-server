@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start" : "node app.js",
+    "start": "node app.js",
     "test": "standard --fix && tape test/*.js"
   },
   "author": "Thomas Mullen",
@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "cfenv": "^1.0.4",
+    "express": "^4.15.2",
+    "http": "0.0.0",
     "simple-signal-server": "^1.2.2",
     "socket.io": "^1.7.3"
   }
