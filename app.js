@@ -1,7 +1,7 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var express = require('express')
+var app = express()
+var server = require('http').Server(app)
+var io = require('socket.io')(server)
 var cfenv = require('cfenv')
 
 io.on('connection', function (socket) {  
@@ -17,9 +17,9 @@ io.on('connection', function (socket) {
 })
 
 app.get('/', function (req, res) {
-    res.send('Multihack Server')
-});
+  res.send('Multihack Server')
+})
 
-var appEnv = cfenv.getAppEnv();
-server.listen(appEnv.port)
+var appEnv = cfenv.getAppEnv()
+server.listen(3000)
 console.log('Running at '+appEnv.url)
