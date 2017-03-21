@@ -21,5 +21,5 @@ app.get('/', function (req, res) {
 })
 
 var appEnv = cfenv.getAppEnv()
-server.listen(3000)
+server.listen(appEnv.port)
 console.log('Running at '+appEnv.url)
