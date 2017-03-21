@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start" : "node app.js",
     "test": "standard --fix && tape test/*.js"
   },
   "author": "Thomas Mullen",
