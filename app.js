@@ -5,6 +5,9 @@ var io = require('socket.io')(server)
 var cfenv = require('cfenv')
 var signal = require('simple-signal-server')(io)
 
+
+var calls = {}
+
 io.on('connection', function (socket) {  
   socket.on('join', function (data) {
     if (!data.room) return
@@ -15,6 +18,17 @@ io.on('connection', function (socket) {
   socket.on('forward', function (data) {
     socket.broadcast.to(socket.room).emit('forward', data)
   })
+  
+  socket.on('voice-join', function () {
+    calls[socket.room] = calls[socket.room] || []
+    calls[socket.room].push(socket.id)
+  })
+  
+  socket.on('voice-leave', function () {
+    calls[socket.room] = calls[socket.room] || []
+    var index = calls.indexOf(socket.id)
+    calls[socket.room].splice(index,1)
+  })
 })
 
 app.get('/', function (req, res) {
@@ -23,8 +37,7 @@ app.get('/', function (req, res) {
 
 signal.on('discover', function (request) {
   if (!request.metadata.room) return
-  var room = io.sockets.adapter.rooms[request.metadata.room]
-  var peerIDs = room ? Object.keys(room.sockets) : []
+  var peerIDs = calls[request.metadata.room] || []
   request.discover(peerIDs)
 })
 
