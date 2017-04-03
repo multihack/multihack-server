@@ -29,6 +29,12 @@ io.on('connection', function (socket) {
     var index = calls.indexOf(socket.id)
     calls[socket.room].splice(index,1)
   })
+  
+  socket.on('disconnect', function () {
+    calls[socket.room] = calls[socket.room] || []
+    var index = calls.indexOf(socket.id)
+    calls[socket.room].splice(index,1)
+  })
 })
 
 app.get('/', function (req, res) {
