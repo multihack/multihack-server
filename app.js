@@ -22,7 +22,8 @@ app.get('/', function (req, res) {
 })
 
 signal.on('discover', function (request) {
-  var peerIDs = io.sockets.adapter.rooms[request.metadata.room].sockets
+  var room = io.sockets.adapter.rooms[request.metadata.room]
+  var peerIDs = room ? room.sockets.map(function (a) {return a.id}) : []
   request.discover(peerIDs)
 })
 
