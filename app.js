@@ -26,13 +26,13 @@ io.on('connection', function (socket) {
   
   socket.on('voice-leave', function () {
     calls[socket.room] = calls[socket.room] || []
-    var index = calls.indexOf(socket.id)
+    var index = calls[socket.room].indexOf(socket.id)
     calls[socket.room].splice(index,1)
   })
   
   socket.on('disconnect', function () {
     calls[socket.room] = calls[socket.room] || []
-    var index = calls.indexOf(socket.id)
+    var index = calls[socket.room].indexOf(socket.id)
     calls[socket.room].splice(index,1)
   })
 })
