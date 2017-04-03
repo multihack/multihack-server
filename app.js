@@ -3,6 +3,7 @@ var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 var cfenv = require('cfenv')
+var signal = require('simple-signal-server')(io)
 
 io.on('connection', function (socket) {  
   socket.on('join', function (data) {
@@ -18,6 +19,11 @@ io.on('connection', function (socket) {
 
 app.get('/', function (req, res) {
   res.send('Multihack Server')
+})
+
+signal.on('discover', function (request) {
+  var peerIDs = io.sockets.adapter.rooms[request.metadata.room].sockets
+  request.discover(peerIDs)
 })
 
 var appEnv = cfenv.getAppEnv()
