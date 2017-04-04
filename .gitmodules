@@ -1,0 +1,3 @@
+[submodule "multihack-web"]
+	path = multihack-web
+	url = https://github.com/RationalCoding/multihack-web

@@ -20,6 +20,7 @@
     "cfenv": "^1.0.4",
     "express": "^4.15.2",
     "http": "0.0.0",
+    "path": "^0.12.7",
     "simple-signal-server": "^1.2.2",
     "socket.io": "^1.7.3"
   }

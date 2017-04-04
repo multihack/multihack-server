@@ -4,7 +4,12 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 var cfenv = require('cfenv')
 var signal = require('simple-signal-server')(io)
+var path = require('path')
 
+app.use('/', express.static(path.join(__dirname, 'multihack-web')))
+app.get('/', function (req, res, next) {
+  res.sendFile(__dirname + '/multihack-web/index.html')
+})
 
 var calls = {}
 
