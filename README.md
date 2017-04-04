@@ -1,4 +1,6 @@
 # multihack-server
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)  
+
 Supercharge your IDE with realtime collaboration features! (Server)
 
 ## Installation
