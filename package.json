@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "standard --fix && tape test/*.js"
+    "test": "standard --fix src/* && standard --fix test/* && tape test/*.js"
   },
   "author": "Thomas Mullen",
   "license": "MIT",
