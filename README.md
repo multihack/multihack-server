@@ -9,4 +9,6 @@ npm install
 node app.js
 ```
 
-The server automatically provides [multihack-web](https://github.com/RationalCoding/multihack-web).
+The server automatically provides [multihack-web](https://github.com/RationalCoding/multihack-web).  
+
+To point [multihack-brackets](https://github.com/RationalCoding/multihack-web) at your custom server, change the Brackets preference "multihack-brackets.hostname"
