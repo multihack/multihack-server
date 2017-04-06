@@ -77,7 +77,7 @@ remote.requestProject() // Call when the user "fetches code"
 // The peer sending will be the peer who joined earliest (unless that's you, in which case the second-earliest peer sends)
 ```
 
-``javascript
+```javascript
 remote.provideFile(filePath, content, requester, num, total)
 // filePath is the relative file path
 // content is the string content of the file
