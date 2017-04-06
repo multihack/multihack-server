@@ -1,5 +1,5 @@
 # multihack-server
-[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)  
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)  [![Percentage of dyno hours for public server remaining this month](https://img.shields.io/badge/public%20server%20hours-89%25-brightgreen.svg)](#)  
 
 Supercharge your IDE with realtime collaboration features! (Server)
 
