@@ -97,11 +97,11 @@ You should be able to reuse [voice.js](https://github.com/RationalCoding/multiha
 `remote.js` calls the constructor for you.
 
 ```javascript
-remote.voice.join() // Join the voice call (must already have joined a room)
+remote.voice.join() // Join the voice call
 ```
 
 ```javascript
-remote.voice.leave() // Leave the voice call (must already have joined the call)
+remote.voice.leave() // Leave the voice call
 ```
 
 ```javascript
