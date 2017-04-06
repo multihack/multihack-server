@@ -3,7 +3,7 @@ This is a brief guide on how to get started porting this application to other ed
 **API is likely to change often, so this is a WIP**
 
 ## Client/Server API
-Start with `[src/remote.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/remote.js)`. It handles all communication with the server and will be roughly the same for all implementations.
+Start with [src/remote.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/remote.js). It handles all communication with the server and will be roughly the same for all implementations.
 
 Connecting to the server requires these arguments to be passed to the constructor.
 ```javascript
@@ -92,7 +92,7 @@ remote.destroy() // Clean up all connections and memory. Call on "Stop Multihack
 
 ## Voice API
 The voice API is super simple, only thing to be done is rigging it to some kind of button.  
-You should be able to reuse `[voice.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/voice.js)`.  
+You should be able to reuse [voice.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/voice.js).  
 
 `remote.js` calls the constructor for you.
 
