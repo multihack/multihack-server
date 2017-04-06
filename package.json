@@ -1,7 +1,7 @@
 {
-  "name": "node-boilerplate",
-  "version": "1.1.0",
-  "description": "A boilerplate to kickstart Node projects.",
+  "name": "multihack-server",
+  "version": "2.0.0",
+  "description": "The socket and signalling server for multihack.",
   "main": "index.js",
   "directories": {
     "test": "test"
