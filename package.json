@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "standard --fix src/* && standard --fix test/* && tape test/*.js"
+    "test": "standard --fix src/* && standard --fix test/* && tape test/*.js",
+    "update-web": "git submodule update --remote --merge"
   },
   "author": "Thomas Mullen",
   "license": "MIT",
