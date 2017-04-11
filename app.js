@@ -27,33 +27,10 @@ io.on('connection', function (socket) {
     socket.emit('join')
   })
   
-  socket.on('forward', function (data) {
-    if (!socket.room) return
-    
-    socket.broadcast.to(socket.room).emit('forward', data)
-  })
-  
-  socket.on('provideFile', function (data) {
-    if (!socket.room) return
-    if (!data.filePath || data.content === undefined || !data.requester) return
-    
-    socket.broadcast.to(data.requester).emit('provideFile', data)
-  })
-  
-  socket.on('requestProject', function () {
-    if (!socket.room) return  
-    
-    var provider = rooms[socket.room][0]
-    if (provider === socket.id) provider = rooms[socket.room][1] // is first peer
-    if (!provider) return // is only peer
-    
-    socket.broadcast.to(provider).emit('requestProject', {
-      requester: socket.id
-    })
-  })
-  
   socket.on('voice-join', function () {
     if (!socket.room) return
+    
+    socket.emit('voice-discover', calls[socket.room] || [])
     
     calls[socket.room] = calls[socket.room] || []
     calls[socket.room].push(socket.id)
@@ -64,7 +41,7 @@ io.on('connection', function (socket) {
     
     calls[socket.room] = calls[socket.room] || []
     var index = calls[socket.room].indexOf(socket.id)
-    calls[socket.room].splice(index, 1)
+    if (index !== -1) calls[socket.room].splice(index, 1)
   })
   
   socket.on('disconnect', function () {
@@ -72,22 +49,23 @@ io.on('connection', function (socket) {
     
     calls[socket.room] = calls[socket.room] || []
     var index = calls[socket.room].indexOf(socket.id)
-    calls[socket.room].splice(index, 1)
+    if (index !== -1) calls[socket.room].splice(index, 1)
     
     rooms[socket.room] = rooms[socket.room] || []
     index = rooms[socket.room].indexOf(socket.id)
-    rooms[socket.room].splice(index, 1) 
+    if (index !== -1) rooms[socket.room].splice(index, 1) 
   })
-})
-
-app.get('/', function (req, res) {
-  res.send('Multihack Server')
 })
 
 signal.on('discover', function (request) {
   if (!request.metadata.room) return
-  var peerIDs = calls[request.metadata.room] || []
+  
+  var peerIDs = rooms[request.metadata.room] || [] // TODO: Loose mesh
   request.discover(peerIDs)
+})
+
+signal.on('request', function (request) {
+  request.forward()
 })
 
 var appEnv = cfenv.getAppEnv()
