@@ -1,11 +1,15 @@
 # Porting Guide
+
 This is a brief guide on how to get started porting this application to other editors.  
-**API is likely to change often, so this is a WIP**
+
+You shouldn't need to deal with it, but it might be handy to see the underlying protocol [multihack-wire](https://github.com/RationalCoding/multihack-wire)
 
 ## Client/Server API
+
 Start with [src/remote.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/remote.js). It handles all communication with the server and will be roughly the same for all implementations.
 
 Connecting to the server requires these arguments to be passed to the constructor.
+
 ```javascript
 new RemoteManager(hostname, room)
 // hostname for the multihack-server. Should get this from preferences
@@ -55,7 +59,6 @@ remote.on('provideFile', function (e) {
   // A peer has provided a file
   e.filePath // Relative path of file
   e.content // Content of file as a string
-  e.num, e.total // Which number file this is, out of a total number of files being provided
   
   // A new file should be created with the given path and content
 })
@@ -82,8 +85,6 @@ remote.provideFile(filePath, content, requester, num, total)
 // filePath is the relative file path
 // content is the string content of the file
 // requester is the ID received from the 'requestProject' event (see above)
-// num is an integer denoting which file this is in the project
-// total is number of files in the project
 ```
 
 ```javascript
@@ -91,7 +92,9 @@ remote.destroy() // Clean up all connections and memory. Call on "Stop Multihack
 ```
 
 ## Voice API
+
 The voice API is super simple, only thing to be done is rigging it to some kind of button.  
+
 You should be able to reuse [voice.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/voice.js).  
 
 `remote.js` calls the constructor for you.
@@ -109,19 +112,21 @@ remote.voice.toggle() // Join/leave the voice call
 ```
 
 ## UI
+
 The UI should be somewhat similar to the other implementations.  
 
 - "Start Multihack" button
 - "Enter a room ID" modal with input
+- "Enter a nickname" modal with input
 - "Join/Leave Voice Call" button
 - "Fetch Code" button
 - "Stop Multihack" button
 
 ## Notes:
-Files are identified by their relative path from the project root and should ALWAYS start with a forward slash '/'.  
-Paths should NEVER end with a forward slash '/'.  
 
-Please don't test your client on the public server for performance reasons.  
+Files are identified by their relative path from the project root and should ALWAYS start with a forward slash '/'.  
+
+Paths should NEVER end with a forward slash '/'.  
 
 The API assumes some kind of CodeMirror-like editor, but there's nothing stopping completely different editors from working as long as they can do programmatic line/column insertions and listen to changes.
 
