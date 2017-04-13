@@ -1,6 +1,6 @@
 {
   "name": "multihack-server",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "The socket and signalling server for multihack.",
   "main": "index.js",
   "directories": {
