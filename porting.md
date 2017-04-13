@@ -19,7 +19,7 @@ new RemoteManager(hostname, room)
 You will need to listen to the following events:
 
 ```javascript
-remote.on('change', function (e) {
+remote.on('changeFile', function (e) {
   e.filePath // The relative path of the file (MUST start with a '/')
   e.change // A CodeMirror change object - https://codemirror.net/doc/manual.html#event_change
   
