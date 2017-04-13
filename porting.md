@@ -67,7 +67,7 @@ remote.on('provideFile', function (e) {
 `remote.js` also provides the following methods.
 
 ```javascript
-remote.change(filePath, change) // Call this when user makes a local change to a CodeMirror editor or equivalent
+remote.changeFile(filePath, change) // Call this when user makes a local change to a CodeMirror editor or equivalent
 // change is a CodeMirror change object
 ```
 
@@ -81,7 +81,7 @@ remote.requestProject() // Call when the user "fetches code"
 ```
 
 ```javascript
-remote.provideFile(filePath, content, requester, num, total)
+remote.provideFile(filePath, content, requester)
 // filePath is the relative file path
 // content is the string content of the file
 // requester is the ID received from the 'requestProject' event (see above)
