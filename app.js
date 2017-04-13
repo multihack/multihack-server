@@ -13,18 +13,68 @@ app.get('/', function (req, res, next) {
 
 var calls = {}
 var rooms = {}
+var sockets = {}
 
 io.on('connection', function (socket) {  
+  sockets[socket.id] = socket
+
   socket.on('join', function (data) {
+    if (!data) return
     if (!data.room) return
     
     socket.join(data.room)
     socket.room = data.room
+    socket.nickname = data.nickname || 'Guest'
+    socket.nop2p = data.nop2p
     
-    rooms[socket.room] = rooms[socket.room] || []
-    rooms[socket.room].push(socket.id)
+    rooms[socket.room] = rooms[socket.room] || [] // create room if missing
+    
+    // do discovery (for no-p2p peers)
+    rooms[socket.room].forEach(function (id) {
+      socket.emit('peer-join', {
+        id: id,
+        nickname: sockets[id].nickname,
+        nop2p: sockets[id].nop2p
+      })
+    })
+    
+    rooms[socket.room].push(socket.id) // add to room
+    
+    // announce connect (for no-p2p peers)
+    socket.broadcast.to(socket.room).emit('peer-join', {
+      id: socket.id,
+      nickname: socket.nickname,
+      nop2p: socket.nop2p
+    })
     
     socket.emit('join')
+  })
+  
+  // discover peers (for no-p2p peers)
+  socket.on('forward-discover', function (data) {
+    if (!data) return
+    if (!socket.room) return
+    
+    var peerIDs = rooms[socket.room] || []
+  })
+  
+  // forward data (for no-p2p peers)
+  socket.on('forward', function (data) {
+    if (!socket.room || !data || !data.target) return
+    data.id = socket.id
+    data.nop2p = socket.nop2p
+
+    if (socket.target === socket.room && !socket.nop2p) {
+      // when sending to the whole room, we only want to send to those peers
+      // that we don't already have a p2p connection with
+      rooms[socket.room].forEach(function (id) {
+        if (sockets[id].nop2p) {
+          socket.broadcast.to(id).emit('forward', data)
+        }
+      })
+    } else {
+      socket.broadcast.to(data.target).emit('forward', data)
+    }
   })
   
   socket.on('voice-join', function () {
@@ -46,6 +96,13 @@ io.on('connection', function (socket) {
   
   socket.on('disconnect', function () {
     if (!socket.room) return
+
+    // announce disconnect (for no-p2p peers)
+    socket.broadcast.to(socket.room).emit('peer-leave', {
+      id: socket.id,
+      nickname: socket.nickname,
+      nop2p: socket.nop2p
+    })
     
     calls[socket.room] = calls[socket.room] || []
     var index = calls[socket.room].indexOf(socket.id)
@@ -54,6 +111,15 @@ io.on('connection', function (socket) {
     rooms[socket.room] = rooms[socket.room] || []
     index = rooms[socket.room].indexOf(socket.id)
     if (index !== -1) rooms[socket.room].splice(index, 1) 
+    
+    // announce disconnect (for nop2p peers)
+    socket.broadcast.to(socket.room).emit('peer-leave', {
+      id: socket.id,
+      nickname: socket.nickname,
+      nop2p: socket.nop2p
+    })
+    
+    delete sockets[socket.id]
   })
 })
 
