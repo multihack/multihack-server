@@ -6,14 +6,17 @@ You shouldn't need to deal with it, but it might be handy to see the underlying 
 
 ## Client/Server API
 
-Start with [src/remote.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/remote.js). It handles all communication with the server and will be roughly the same for all implementations.
+Start with [src/remote.js](https://github.com/RationalCoding/multihack-web/blob/master/src/network/remote.js). It handles all communication with the server and will be the same for all implementations.
+
+You may need to change how dependencies are loaded if your host editor doesn't support Node-style requires.
 
 Connecting to the server requires these arguments to be passed to the constructor.
 
 ```javascript
-new RemoteManager(hostname, room)
+new RemoteManager(hostname, room, nickname)
 // hostname for the multihack-server. Should get this from preferences
 // room to join. Should get this when Multihack is started
+// nickname, (optional nickname for user. defaults to "Guest")
 ```
 
 You will need to listen to the following events:
@@ -81,7 +84,7 @@ remote.requestProject() // Call when the user "fetches code"
 ```
 
 ```javascript
-remote.provideFile(filePath, content, requester)
+remote.provideFile(filePath, content, requester) // streams a file
 // filePath is the relative file path
 // content is the string content of the file
 // requester is the ID received from the 'requestProject' event (see above)
