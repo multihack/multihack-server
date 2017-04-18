@@ -11,6 +11,24 @@ app.get('/', function (req, res, next) {
   res.sendFile(__dirname + '/multihack-web/index.html')
 })
 
+// oEmbed
+app.get('/embed', function (req, res, next) {
+  var resURL = appEnv.url+'/?embed=true&room='+encodeURI(req.query.room)
+  
+  res.setHeader('Content-Type', 'application/json')
+  res.send(JSON.stringify({
+    success: true,
+    type: 'rich',
+    version: '1.0',
+    provider_name: 'MultiHack',
+    provider_url: 'http://multihack.co',
+    title: 'Multihack',
+    height: '300',
+    width: '500',
+    html: '<iframe src="'+resURL+'" scrolling="no" frameborder="0" height="300" allowtransparency="true" style="width: 100%; overflow: hidden;"></iframe>'
+  }))
+})
+
 var calls = {}
 var rooms = {}
 var sockets = {}
