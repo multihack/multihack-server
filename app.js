@@ -11,9 +11,11 @@ app.get('/', function (req, res, next) {
   res.sendFile(__dirname + '/multihack-web/index.html')
 })
 
+var HOST = 'https://rationalcoding.github.io/multihack-web/'
+
 // oEmbed
 app.get('/embed', function (req, res, next) {
-  var resURL = appEnv.url+'/?embed=true&room='+encodeURI(req.query.room)
+  var resURL = HOST+'?embed=true&room='+encodeURI(req.query.room)
   
   res.setHeader('Content-Type', 'application/json')
   res.send(JSON.stringify({
