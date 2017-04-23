@@ -16,3 +16,5 @@ The server automatically provides [multihack-web](https://github.com/RationalCod
 It provides signaling for the P2P connections, as well as a forwarding proxy for those without WebRTC support.
 
 To point [multihack-brackets](https://github.com/RationalCoding/multihack-web) at your custom server, change the Brackets preference "multihack-brackets.hostname"
+
+To point [multihack-vsocde](https://github.com/RationalCoding/multihack-vscode), set the "multihack.hostname" workspace config option.
