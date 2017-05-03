@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "cfenv": "^1.0.4",
+    "events": "^1.1.1",
     "express": "^4.15.2",
     "http": "0.0.0",
     "path": "^0.12.7",
