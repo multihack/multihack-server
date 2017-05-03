@@ -37,6 +37,8 @@ var sockets = {}
 
 io.on('connection', function (socket) {  
   sockets[socket.id] = socket
+  
+  socket.emit('id', socket.id)
 
   socket.on('join', function (data) {
     if (!data) return
@@ -68,14 +70,6 @@ io.on('connection', function (socket) {
     })
     
     socket.emit('join')
-  })
-  
-  // discover peers (for no-p2p peers)
-  socket.on('forward-discover', function (data) {
-    if (!data) return
-    if (!socket.room) return
-    
-    var peerIDs = rooms[socket.room] || []
   })
   
   // forward data (for no-p2p peers)
